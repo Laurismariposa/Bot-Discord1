@@ -15,7 +15,22 @@ async def on_ready():
 
 @bot.command()
 async def hello(ctx):
-    await ctx.send("Hi🤗")
+    # 1. Crear el Embed
+    embed = discord.Embed(
+        title="👋 ¡Hola! Soy tu bot personalizado.",
+        description="Gracias por saludar. ¡Usa `$help` para ver mis comandos!",
+        color=discord.Color.blue()
+    )
+    # 2. Agregar información opcional
+    embed.add_field(name="Mi Prefijo", value="`$`", inline=True)
+    # 3. Solución: Usar .display_avatar.url para obtener siempre una URL válida
+    embed.set_footer(
+        text=f"Solicitado por {ctx.author.name}", 
+        icon_url=ctx.author.display_avatar.url # ¡CAMBIO CLAVE AQUÍ!
+    )
+    
+    # 4. Enviar el Embed
+    await ctx.send(embed=embed)
 
 @bot.command()
 async def bye(ctx):
