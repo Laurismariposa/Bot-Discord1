@@ -1,6 +1,10 @@
 import discord
 from discord.ext import commands
+import os
+import random
 from bot_logic import gen_pass
+from bot_logic import get_dog_image_url
+from bot_logic import get_fox_image_url
 # La variable intents almacena los privilegios del bot
 intents = discord.Intents.default()
 # Activar el privilegio de lectura de mensajes
@@ -61,5 +65,36 @@ async def repeat(ctx, times: int, *, content='repeating...'): # <-- CAMBIO CLAVE
     # Bucle de repetición
     for i in range(times):
         await ctx.send(content)
+
+@bot.command()
+async def mem(ctx):
+    with open('Image/Meme1.jpeg','rb') as f:
+        # ¡Vamos a almacenar el archivo de la biblioteca Discord convertido en esta variable!
+        picture = discord.File(f)
+        # A continuación, podemos enviar este archivo como parámetro.
+    await ctx.send(file=picture)
+
+@bot.command()
+async def meme_aleatorio(ctx):
+    memealet = random.choice(os.listdir("Image"))
+    with open(f'Image/{memealet}','rb') as f:
+        # ¡Vamos a almacenar el archivo de la biblioteca Discord convertido en esta variable!
+        picture = discord.File(f)
+        # A continuación, podemos enviar este archivo como parámetro.
+    await ctx.send(file=picture)
+
+@bot.command('dog')
+async def dog(ctx):
+    '''Una vez que llamamos al comando duck, 
+    el programa llama a la función get_duck_image_url'''
+    image_url = get_dog_image_url()
+    await ctx.send(image_url)
+
+@bot.command()
+async def fox(ctx):
+    '''Una vez que llamamos al comando duck, 
+    el programa llama a la función get_duck_image_url'''
+    image_url = get_fox_image_url()
+    await ctx.send(image_url)
 
 
